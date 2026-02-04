@@ -19,14 +19,13 @@ public class DivisionCuentas extends HttpServlet {
      */
     public DivisionCuentas() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int edad = 10;
 		String metodo = request.getMethod();
 		if("POST".equalsIgnoreCase(metodo)) {
 			int cantidadPersonas = Integer.parseInt(request.getParameter("personas"));
