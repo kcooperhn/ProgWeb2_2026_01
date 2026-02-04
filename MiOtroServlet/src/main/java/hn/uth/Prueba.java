@@ -19,7 +19,6 @@ public class Prueba extends HttpServlet {
      */
     public Prueba() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -27,6 +26,7 @@ public class Prueba extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int edad = 0;
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
