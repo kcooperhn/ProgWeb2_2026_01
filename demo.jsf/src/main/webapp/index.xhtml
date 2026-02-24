@@ -9,6 +9,22 @@
     </h:head>
     <h:body>
         <h1>Aplicación de ejemplo JSF</h1>
+        <h:form prependId="false">
+        	<h:outputLabel for="numero1" value="Ingrese número 1:"/>
+        	<h:inputText id="numero1" value="#{MiBean.numero1}" required="true" label="Número 1"/>
+        
+        	<h:outputLabel for="numero2" value="Ingrese número 2:"/>
+        	<h:inputText id="numero2" value="#{MiBean.numero2}" required="true" label="Número 2"/>
+        	
+        	<h:commandButton value="Realizar Calculo en Bean" action="#{MiBean.calcular}"/>
+        </h:form>
+        
+        <h2>
+        	<h:outputLabel value="El resultado es: "/>
+        	<h:outputLabel value="#{MiBean.resultado}"/>
+        </h2>
+        
+        
     </h:body>
 </f:view>
 </html>
