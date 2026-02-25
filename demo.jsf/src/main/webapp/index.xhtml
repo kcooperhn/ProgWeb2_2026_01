@@ -8,7 +8,11 @@
         <title>Inicio</title>
     </h:head>
     <h:body>
-        <h1>Aplicación de ejemplo JSF</h1>
+        <h1>Aplicación de ejemplo JSF</h1> 
+         <h:form prependId="false">
+        	<h:commandButton value="Dashboard" action="#{MiBean.navegarADashboard}" />
+        	<h:commandLink value="Navegar a otra pantalla" action="#{MiBean.navegarAMenu}"/>
+        </h:form>
         <h:form prependId="false">
         	<h:outputLabel for="numero1" value="Ingrese número 1:"/>
         	<h:inputText id="numero1" value="#{MiBean.numero1}" required="true" label="Número 1"/>
@@ -18,10 +22,22 @@
         	
         	<h:commandButton value="Realizar Calculo en Bean" action="#{MiBean.calcular}"/>
         </h:form>
+        <br/>
+        <br/>
+        <h:form prependId="false">
+        	<h:outputLabel for="numero3" value="Ingrese número a calcular logaritmo:"/>
+        	<h:inputText id="numero3" value="#{MiBean.numero1}" required="true" label="Número 1"/>
+        
+        	<h:outputLabel for="numero4" value="Ingrese número a sumar:"/>
+        	<h:inputText id="numero4" value="#{MiBean.numero2}" required="true" label="Número 2"/>
+        	
+        	<h:commandButton value="Ejecutar operación" action="#{MiBean.ejecutarCalculo}" /> <!-- process="this" update="txtOperacion,lblMsgResultado,lblValorResultado" />-->
+        </h:form>
         
         <h2>
-        	<h:outputLabel value="El resultado es: "/>
-        	<h:outputLabel value="#{MiBean.resultado}"/>
+        	<h:outputText id="txtOperacion" name="txtOperacion" rendered ="#{MiBean.calculoRealizado}" value="#{MiBean.operacion}"/> <br/>
+        	<h:outputLabel id="lblMsgResultado" name="lblMsgResultado" rendered="#{MiBean.calculoRealizado}" value="El resultado es: "/>
+        	<h:outputLabel id="lblValorResultado" name="lblValorResultado" rendered="#{MiBean.calculoRealizado}" value="#{MiBean.resultado}"/>
         </h2>
         
         
