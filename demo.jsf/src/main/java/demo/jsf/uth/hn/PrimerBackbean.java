@@ -17,8 +17,6 @@ public class PrimerBackbean implements Serializable {
 
 	private int numero1;
 	private int numero2;
-	private String nombre;
-	private String apellido;
 	private int resultado;
 	private boolean calculoRealizado;
 	private String operacion;
@@ -81,21 +79,4 @@ public class PrimerBackbean implements Serializable {
 	public void setOperacion(String operacion) {
 		this.operacion = operacion;
 	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-	
 }
