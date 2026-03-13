@@ -4,22 +4,94 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Pantalla Primefaces</title>
+        <title>Lista de Tareas</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
     </h:head>
     <h:body>
-        <h:messages globalOnly="true"/>
+        <p:growl id="growl" showDetail="true" />
         <h:form prependId="false">
-            <p:panel header="Registro de Clientes">
-            <p:panelGrid columns="4" layout="grid" styleClass="ui-fluid">
+            <p:panel header="Tareas" toggleable="true" toggleableHeader="true" closable="true" toggleSpeed="500" id="panelTask"
+                     closeSpeed="500" widgetVar="panel">
 
-                <p:outputLabel for="nombre">Primer Nombre</p:outputLabel>
-                <p:inputText id="nombre" value="#{ClientesBean.nombre}" required="true" />
+                <p:panelGrid id="panelForm" columns="2" layout="grid" styleClass="ui-fluid">
+                    <p:outputLabel for="nombre">Nombre de la Tarea</p:outputLabel>
+                    <p:inputText id="nombre" value="#{TareasBean.newTask.nombre}" required="true" />
 
-                <p:outputLabel for="apellido">Apellido</p:outputLabel>
-                <p:inputText id="apellido" value="#{ClientesBean.apellido}" required="true"/>
-            </p:panelGrid>
-            <p:commandButton styleClass="ui-button-success" value="Guardar" action="#{ClientesBean.guardar}"/>
+                    <p:outputLabel for="notas">Notas</p:outputLabel>
+                    <p:inputText id="notas" value="#{TareasBean.newTask.notas}" required="false" />
+                </p:panelGrid>
+
+                <f:facet name="options">
+                    <p:menu>
+                        <p:submenu label="Settings">
+                            <p:menuitem value="Toggle" url="#" icon="pi pi-clone" onclick="PF('panel').toggle()"/>
+                            <p:menuitem value="Remove" url="#" icon="pi pi-times" onclick="PF('panel').close()"/>
+                        </p:submenu>
+                    </p:menu>
+                </f:facet>
+
+                <p:commandButton styleClass="ui-button-success" value="Guardar" action="#{TareasBean.guardar}"
+                                 update="dt-task,growl,panelForm"/>
+
+                <br/><br/>
+                <p:dataTable id="dt-task" widgetVar="dtTask" var="task" value="#{TareasBean.taskList}"
+                             reflow="true" styleClass="products-table" selection="#{TareasBean.selectedTask}"
+                             rowKey="#{task.nombre}" paginator="true" rows="10" selectionRowMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">TAREAS</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PrimeFaces.debounce(() => PF('dtTask').filter())" placeholder="Buscar" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="Nombre" sortBy="#{task.nombre}" filterBy="#{task.nombre}">
+                        <h:outputText value="#{task.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Notas" sortBy="#{task.notas}" filterBy="#{task.notas}">
+                        <h:outputText value="#{task.notas}" />
+                    </p:column>
+
+                    <p:column headerText="Completada" sortBy="#{task.completada}" filterBy="#{task.completada}">
+                        <h:outputText styleClass="product-badge status-#{task.completada?'instock':'outofstock'}"
+                                      value="#{task.completada?'Finalizada':'Pendiente'}" />
+                    </p:column>
+
+                    <p:column exportable="false" ariaHeaderText="Actions">
+                        <p:commandButton icon="pi pi-pencil" update="panelTask"
+                                         oncomplete="PF('manageProductDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                            <f:setPropertyActionListener value="#{task}" target="#{TareasBean.selectedTask}" />
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this" oncomplete="PF('deleteTaskDialog').show()">
+                            <f:setPropertyActionListener value="#{task}" target="#{TareasBean.selectedTask}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+                
+
+
             </p:panel>
+
+        </h:form>
+
+        <h:form id="dialogs" prependId="false">
+            <p:confirmDialog id="deleteTaskDialog" widgetVar="deleteTaskDialog" showEffect="fade" width="300" message="¿Deseas eliminar esta tarea?" header="Confirmar eliminación" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{TareasBean.deleteTask}"
+                                 process="@this" oncomplete="PF('deleteTaskDialog').hide()" update="dt-task,growl" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteTaskDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:confirmDialog global="true" showEffect="fade" width="300">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                 icon="pi pi-times" />
+            </p:confirmDialog>
         </h:form>
     </h:body>
 </html>
