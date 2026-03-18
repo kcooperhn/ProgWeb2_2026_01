@@ -34,7 +34,7 @@
                                  update="dt-task,growl,panelForm"/>
 
                 <br/><br/>
-                <p:dataTable id="dt-task" widgetVar="dtTask" var="task" value="#{TareasBean.taskList}"
+                <p:dataTable id="dt-task" widgetVar="dtTask" var="task" value="#{TareasBean.taskList.data}"
                              reflow="true" styleClass="products-table" selection="#{TareasBean.selectedTask}"
                              rowKey="#{task.nombre}" paginator="true" rows="10" selectionRowMode="add" paginatorPosition="bottom">
                     <f:facet name="header">

@@ -1,5 +1,6 @@
 package hn.uth.ejercicioprimefaces.beans;
 
+import hn.uth.ejercicioprimefaces.data.ListadoTareas;
 import hn.uth.ejercicioprimefaces.data.Tarea;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -12,12 +13,12 @@ import java.util.List;
 @Named("TareasBean")
 @ViewScoped
 public class TareasBean implements Serializable {
-    private List<Tarea> taskList;
+    private ListadoTareas taskList;
     private Tarea newTask;
     private Tarea selectedTask;
 
     public TareasBean() {
-        this.taskList = new ArrayList<>();
+        this.taskList = new ListadoTareas();
         this.newTask = new Tarea();
 
         this.selectedTask = null;
@@ -31,7 +32,7 @@ public class TareasBean implements Serializable {
                             "Debes de ingresar un nombre valido"));
             return;
         }
-        this.taskList.add(newTask.copiar());
+        this.taskList.agregarTarea(newTask.copiar());
         this.newTask = new Tarea();
 
         FacesContext.getCurrentInstance().addMessage(null,
@@ -47,11 +48,11 @@ public class TareasBean implements Serializable {
                         "El registro se ha enviado a borrar"));
     }
 
-    public List<Tarea> getTaskList() {
+    public ListadoTareas getTaskList() {
         return taskList;
     }
 
-    public void setTaskList(List<Tarea> taskList) {
+    public void setTaskList(ListadoTareas taskList) {
         this.taskList = taskList;
     }
 
