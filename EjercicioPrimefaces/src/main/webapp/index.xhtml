@@ -30,8 +30,12 @@
                     </p:menu>
                 </f:facet>
 
-                <p:commandButton styleClass="ui-button-success" value="Guardar" action="#{TareasBean.guardar}"
+                <p:commandButton styleClass="ui-button-success" value="#{TareasBean.saveActionText}" action="#{TareasBean.guardar}"
                                  update="dt-task,growl,panelForm"/>
+
+                <p:commandButton id="btnCancelar" widgetVar="btnCancelar" styleClass="ui-button-warning" value="Cancelar"
+                                 rendered="#{TareasBean.saveActionText == 'Modificar'}" action="#{TareasBean.cancelar}"
+                                 update="dt-task,growl,panelForm,btnCancelar"/>
 
                 <br/><br/>
                 <p:dataTable id="dt-task" widgetVar="dtTask" var="task" value="#{TareasBean.taskList.data}"
@@ -60,8 +64,7 @@
                     </p:column>
 
                     <p:column exportable="false" ariaHeaderText="Actions">
-                        <p:commandButton icon="pi pi-pencil" update="panelTask"
-                                         oncomplete="PF('manageProductDialog').show()"
+                        <p:commandButton icon="pi pi-pencil" update="panelTask" action="#{TareasBean.editTask()}"
                                          styleClass="edit-button rounded-button ui-button-success" process="@this">
                             <f:setPropertyActionListener value="#{task}" target="#{TareasBean.selectedTask}" />
                         </p:commandButton>

@@ -28,10 +28,16 @@ public class ListadoTareas implements Serializable {
         //this.bd.eliminarTarea(tareaEliminar);
     }
 
-    public void modificarTarea(Tarea tareaModificar, int posicion){
+    public void modificarTarea(Tarea tareaModificar){
+        int posicion = 0;
+        for (int i = 0; i < this.data.size(); i++){
+            if(this.data.get(i).getId() == tareaModificar.getId()){
+                posicion = i;
+            }
+        }
         this.data.remove(posicion);
         this.data.add(tareaModificar);
-        //this.bd.modificarTarea(tareaModificar);
+        this.bd.actualizarTarea(tareaModificar);
     }
 
 }

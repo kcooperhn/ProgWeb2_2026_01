@@ -16,12 +16,13 @@ public class TareasBean implements Serializable {
     private ListadoTareas taskList;
     private Tarea newTask;
     private Tarea selectedTask;
+    private String saveActionText;
 
     public TareasBean() {
         this.taskList = new ListadoTareas();
         this.newTask = new Tarea();
-
         this.selectedTask = null;
+        this.saveActionText="Crear";
     }
 
     public void guardar() {
@@ -32,13 +33,35 @@ public class TareasBean implements Serializable {
                             "Debes de ingresar un nombre valido"));
             return;
         }
-        this.taskList.agregarTarea(newTask.copiar());
+        String mensajeExito = "El registro se ha creado exitosamente!";
+        if(this.selectedTask == null){
+            this.taskList.agregarTarea(newTask.copiar());
+        }else{
+
+            this.taskList.modificarTarea(newTask.copiar());
+            mensajeExito="El registro se ha modificado exitosamente!";
+        }
+
         this.newTask = new Tarea();
 
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Operación exitosa",
-                        "El registro se ha guardado exitosamente!"));
+                        mensajeExito));
+        this.saveActionText="Crear";
+    }
+
+    public void editTask(){
+        if(selectedTask != null){
+            this.newTask = selectedTask;
+            this.saveActionText = "Modificar";
+        }
+    }
+
+    public void cancelar(){
+        this.newTask = new Tarea();
+        this.selectedTask = null;
+        this.saveActionText="Crear";
     }
 
     public void deleteTask(){
@@ -70,5 +93,13 @@ public class TareasBean implements Serializable {
 
     public void setSelectedTask(Tarea selectedTask) {
         this.selectedTask = selectedTask;
+    }
+
+    public String getSaveActionText() {
+        return saveActionText;
+    }
+
+    public void setSaveActionText(String saveActionText) {
+        this.saveActionText = saveActionText;
     }
 }

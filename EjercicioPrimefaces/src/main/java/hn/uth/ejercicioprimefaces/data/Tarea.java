@@ -3,11 +3,13 @@ package hn.uth.ejercicioprimefaces.data;
 import java.io.Serializable;
 
 public class Tarea implements Serializable {
+    private int id;
     private String nombre;
     private String notas;
     private boolean completada;
 
     public Tarea() {
+        this.id=0;
         this.completada = false;
         this.nombre="";
         this.notas="";
@@ -17,6 +19,14 @@ public class Tarea implements Serializable {
         this.nombre = nombre;
         this.notas = notas;
         this.completada = completada;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
